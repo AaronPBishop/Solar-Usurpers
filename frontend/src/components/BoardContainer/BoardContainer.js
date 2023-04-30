@@ -18,15 +18,14 @@ const BoardContainer = () => {
             display: 'flex',
             justifyContent: 'center',
             flexWrap: 'wrap',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
             border: '2px solid transparent',
-            borderRadius: '3vw',
-            boxShadow: '0px 0px 8px 2px rgb(40, 0, 80)',
             width: '90vw',
             height: '95vh'
         }}>
             {
                 board.length &&
-                board.map((row, i) => <Row assemblies={row} key={i} />)
+                board.map((row, i) => <Row rowCoord={i} assemblies={row} key={i} />)
             }
         </div>
     );

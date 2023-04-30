@@ -8,7 +8,7 @@ const reduceBoard = (board) => {
     const boardCopy = [...board];
 
     for (let i = 0; i < boardCopy.length; i++) {
-        let randTotal = Math.floor(Math.random() * 3) + 1;
+        let randTotal = Math.floor(Math.random() * 3) + 2;
 
         while (randTotal > 0) {
             const randAssembly = Math.floor(Math.random() * boardCopy[i].length);
