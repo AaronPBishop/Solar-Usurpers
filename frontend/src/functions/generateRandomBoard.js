@@ -8,7 +8,7 @@ const reduceBoard = (board) => {
     const boardCopy = [...board];
 
     for (let i = 0; i < boardCopy.length; i++) {
-        let randTotal = Math.floor(Math.random() * 3) + 2;
+        let randTotal = Math.floor(Math.random() * 3) + 1;
 
         while (randTotal > 0) {
             const randAssembly = Math.floor(Math.random() * boardCopy[i].length);
@@ -30,8 +30,9 @@ const placePlayers = (board) => {
     const randPlayerRow = Math.floor(Math.random() * boardCopy.length);
     const randPlayerCol = Math.floor(Math.random() * boardCopy[randPlayerRow].length);
 
-    if (boardCopy[randCPURow][randCPUCol] === null) return placePlayers(board);
-    if (boardCopy[randPlayerRow][randPlayerCol] === null) return placePlayers(board);
+    if (boardCopy[randCPURow][randCPUCol] === null) return placePlayers(boardCopy);
+    if (boardCopy[randPlayerRow][randPlayerCol] === null) return placePlayers(boardCopy);
+    if (randCPURow === randPlayerRow) return placePlayers(boardCopy);
 
     boardCopy[randCPURow][randCPUCol] = { usurper: generateRandomColor(), troops: 25 };
     boardCopy[randPlayerRow][randPlayerCol] = { usurper: 'player', troops: 10 };
@@ -42,7 +43,7 @@ const placePlayers = (board) => {
 const generateRandomBoard = () => {
     const board = [];
 
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 4; i++) {
         board.push([]);
 
         for (let j = 0; j < 8; j++) {

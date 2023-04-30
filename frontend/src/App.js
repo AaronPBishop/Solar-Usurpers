@@ -6,7 +6,7 @@ import './styles.css';
 
 const App = () => {
   return (
-    <div>
+    <div style={{marginTop: '2vh'}}>
       <Routes>
         <Route exact path='/' element={<BaseContainer />} />
       </Routes>

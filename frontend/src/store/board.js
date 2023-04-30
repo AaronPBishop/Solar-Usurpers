@@ -1,3 +1,5 @@
+import generateRandomBoard from "../functions/generateRandomBoard";
+
 const initialState = {
     board: []
 };
@@ -13,7 +15,7 @@ const boardReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case 'GENERATE_BOARD': {
-            currentState.board = [];
+            currentState.board = generateRandomBoard();
 
             return currentState;
         };
