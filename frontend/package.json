@@ -14,7 +14,9 @@
     "redux": "^4.2.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.4.2",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "styled-components": "^5.3.6",
+    "styled-icons": "^10.47.0"
   },
   "scripts": {
     "start": "react-scripts start",

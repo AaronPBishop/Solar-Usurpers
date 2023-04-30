@@ -1,6 +1,6 @@
 const BoardContainer = () => {
     return (
-        <div style={{color: 'white'}}>
+        <div>
             hi
         </div>
     );
