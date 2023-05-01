@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
-import { setAssemblies, setTarget } from '../../store/game';
+import { incrementTroops, setAssemblies, setTarget } from '../../store/game';
 
 import { GalacticRepublic } from '@styled-icons/fa-brands/GalacticRepublic';
 
@@ -16,27 +16,32 @@ const Assembly = ({ rowCoord, colCoord, usurper, troops }) => {
     const [currTroops, setCurrTroops] = useState(troops);
 
     useEffect(() => {
-        const incrementTroops = setInterval(() => {
-            if (usurper) setCurrTroops(currTroops + 1);
+        const troopTimer = setInterval(() => {
+            if (usurper) dispatch(incrementTroops({ row: rowCoord, col: colCoord }));
             setSwitched(switched => !switched);
         }, [1000]);
 
-        return () => clearInterval(incrementTroops);
+        return () => clearInterval(troopTimer);
     }, [switched]);
 
     useEffect(() => {
+        for (let i = 0; i < gameState.board.length; i++) {
+            for (let j = 0; j < gameState.board[i].length; j++) {
+                if (i === rowCoord && j === colCoord) setCurrTroops(gameState.board[i][j].troops);
+            };
+        };
+    }, [gameState.board]);
+
+    useEffect(() => {
         if (usurper === 'player') {
-            if (!gameState.selectedAssemblies.length) {
-                setClicked(false);
+            const isSelected = gameState.selectedAssemblies.some(coord => coord[0] === rowCoord && coord[1] === colCoord);
+            
+            if (isSelected) {
+                setClicked(true);
                 return;
             };
-            
-            for (let coord of gameState.selectedAssemblies) {
-                const [row, col] = coord;
 
-                if (row === rowCoord && col === colCoord) setClicked(true);
-                if (row !== rowCoord || col !== colCoord) setClicked(false);
-            };
+            setClicked(false);
         };
     }, [gameState.selectedAssemblies]);
 
@@ -55,7 +60,7 @@ const Assembly = ({ rowCoord, colCoord, usurper, troops }) => {
                 return;
             };
 
-            dispatch(setTarget({ row: rowCoord, col: colCoord }))
+            dispatch(setTarget({ row: rowCoord, col: colCoord }));
         }}
         style={{
             display: 'flex',

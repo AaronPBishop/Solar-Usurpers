@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
-import { generateBoard } from '../../store/game';
+import { generateBoard, launchAttack } from '../../store/game';
 
 import Row from '../Row/Row';
 
@@ -11,6 +11,18 @@ const BoardContainer = () => {
     const board = useSelector(state => state.game.board);
 
     useEffect(() => { dispatch(generateBoard()) }, []);
+
+    useEffect(() => {
+        const keyDownHandler = e => {
+            e.preventDefault();
+
+            if (e.code === 'Space') dispatch(launchAttack());
+        };
+    
+        document.addEventListener('keydown', keyDownHandler);
+    
+        return () => document.removeEventListener('keydown', keyDownHandler);
+    }, []);
 
     return (
         <div
