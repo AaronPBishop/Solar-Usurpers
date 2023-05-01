@@ -169,36 +169,25 @@ const gameReducer = (state = initialState, action) => {
             };
 
             const [targetRow, targetCol] = currentState.selectedTarget;
-
-            let assemblyTroops = 0;
-            let numAssemblies = currentState.selectedAssemblies.length;
-
-            for (let coord of currentState.selectedAssemblies) {
-                const [assemblyRow, assemblyCol] = coord;
-                assemblyTroops += boardCopy[assemblyRow][assemblyCol].troops;
-            };
         
-            let totalTroopsTaken = Math.min(assemblyTroops, boardCopy[targetRow][targetCol].troops);
-            let troopsPerAssembly = Math.floor(totalTroopsTaken / numAssemblies);
-        
+            let totalAssemblyTroops = 0;
             for (let coord of currentState.selectedAssemblies) {
                 const [assemblyRow, assemblyCol] = coord;
 
-                let assemblyTroops = boardCopy[assemblyRow][assemblyCol].troops;
-                let troopsTaken = Math.min(troopsPerAssembly, assemblyTroops, totalTroopsTaken);
-
-                boardCopy[assemblyRow][assemblyCol].troops -= troopsTaken;
-                totalTroopsTaken -= troopsTaken;
+                totalAssemblyTroops += boardCopy[assemblyRow][assemblyCol].troops;
 
                 boardCopy[assemblyRow][assemblyCol].attackData.isAttacking = true;
-                boardCopy[assemblyRow][assemblyCol].attackData.numTroops = troopsTaken;
+                boardCopy[assemblyRow][assemblyCol].attackData.numTroops = boardCopy[assemblyRow][assemblyCol].troops;
                 boardCopy[assemblyRow][assemblyCol].attackData.targetPos = [boardCopy[targetRow][targetCol].position.x, boardCopy[targetRow][targetCol].position.y];
+
+                boardCopy[assemblyRow][assemblyCol].troops = 0;
             };
         
-            boardCopy[targetRow][targetCol].troops -= assemblyTroops;
-            if (boardCopy[targetRow][targetCol].troops < 0) boardCopy[targetRow][targetCol].troops = 0;
-        
-            if (boardCopy[targetRow][targetCol].troops === 0) boardCopy[targetRow][targetCol].usurper = 'player';
+            boardCopy[targetRow][targetCol].troops -= totalAssemblyTroops;
+            if (boardCopy[targetRow][targetCol].troops < 0) {
+                boardCopy[targetRow][targetCol].troops = Math.abs(boardCopy[targetRow][targetCol].troops);
+                boardCopy[targetRow][targetCol].usurper = 'player';
+            };
         
             currentState.board = boardCopy;
             currentState.previousAttackers = currentState.selectedAssemblies;
