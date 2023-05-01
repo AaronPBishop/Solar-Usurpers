@@ -17,7 +17,7 @@ const Assembly = ({ rowCoord, colCoord, usurper, troops }) => {
 
     useEffect(() => {
         const troopTimer = setInterval(() => {
-            if (usurper) dispatch(incrementTroops({ row: rowCoord, col: colCoord }));
+            if (usurper && currTroops < 50) dispatch(incrementTroops({ row: rowCoord, col: colCoord }));
             setSwitched(switched => !switched);
         }, [1000]);
 

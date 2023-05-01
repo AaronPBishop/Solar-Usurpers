@@ -1,4 +1,5 @@
 import generateRandomBoard from "../functions/generateRandomBoard";
+import getNeighbors from "../functions/getNeighbors";
 
 const initialState = {
     board: [],
@@ -96,7 +97,19 @@ const gameReducer = (state = initialState, action) => {
                 return currentState;
             };
 
-            currentState.selectedTarget = [action.payload.row, action.payload.col];
+            for (let i = 0; i < currentState.selectedAssemblies.length; i++) {
+                const [row, col] = currentState.selectedAssemblies[i];
+                const neighbors = getNeighbors(currentState.board, [row, col]);
+
+                for (let neighbor of neighbors) {
+                    const [nRow, nCol] = neighbor;
+                    
+                    if (action.payload.row === nRow && action.payload.col === nCol) {
+                        currentState.selectedTarget = [action.payload.row, action.payload.col];
+                        return currentState;
+                    };
+                };
+            };
 
             return currentState;
         };
