@@ -14,7 +14,7 @@ body {
 }
 
 .spin-assembly {
-  animation: spin 8s linear infinite;
+  animation: spin 6s linear infinite;
 }
 
 @keyframes spin {

@@ -6,7 +6,9 @@ const Row = ({ rowCoord, assemblies }) => {
             {
                 assemblies.map((assembly, i) => {
                     if (!assembly) return (
-                        <div style={{width: '5vw', marginTop: '4vh', marginBottom: '4vh', marginLeft: '2vw', marginRight: '2vw'}}></div>
+                        <div 
+                        style={{width: '5vw', marginTop: '4vh', marginBottom: '2vh', marginLeft: '4vw', marginRight: '2vw'}}
+                        ></div>
                     );
 
                     return <Assembly rowCoord={rowCoord} colCoord={i} usurper={assembly.usurper} troops={assembly.troops} key={i} />

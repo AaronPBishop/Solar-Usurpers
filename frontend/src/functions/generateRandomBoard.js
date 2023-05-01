@@ -1,4 +1,5 @@
 import getNeighbors from "./getNeighbors";
+import searchValidPath from "./searchValidPath";
 
 const generateRandomColor = () => {
     const colors = ['red', 'blue', 'rgb(0, 210, 0)'];
@@ -71,6 +72,8 @@ const generateRandomBoard = () => {
             if (!neighbors.length) return generateRandomBoard();
         };
     };
+
+    if (!searchValidPath(positionedBoard)) return generateRandomBoard();
 
     return positionedBoard;
 };
