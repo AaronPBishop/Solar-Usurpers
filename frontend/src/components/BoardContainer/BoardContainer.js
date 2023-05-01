@@ -1,14 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
-import { generateBoard } from '../../store/board';
+import { generateBoard } from '../../store/game';
 
 import Row from '../Row/Row';
 
 const BoardContainer = () => {
     const dispatch = useDispatch();
 
-    const board = useSelector(state => state.board.board);
+    const board = useSelector(state => state.game.board);
 
     useEffect(() => { dispatch(generateBoard()) }, []);
 

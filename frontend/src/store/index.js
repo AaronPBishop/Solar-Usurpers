@@ -1,10 +1,10 @@
 import { createStore, compose, applyMiddleware, combineReducers } from 'redux';
 import thunk from "redux-thunk";
 
-import boardReducer from './board';
+import gameReducer from './game';
 
 const rootReducer = combineReducers({
-    board: boardReducer
+    game: gameReducer
 });
 
 let enhancer;
