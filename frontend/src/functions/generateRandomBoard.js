@@ -39,7 +39,7 @@ const placePlayers = (board) => {
         let randCPUCol = Math.floor(Math.random() * boardCopy[randCPURow].length);
 
         if (boardCopy[randCPURow][randCPUCol] !== null) {
-            if (Math.abs(randPlayerRow - randCPURow) >= 2) {
+            if (Math.abs(randPlayerRow - randCPURow) >= 2 && Math.abs(randPlayerCol - randCPUCol) >= 3) {
                 if (board[randCPURow][randCPUCol].usurper !== 'player') {
                     boardCopy[randCPURow][randCPUCol] = { usurper: generateRandomColor(), troops: 25, attackData: { isAttacking: false, numTroops: 0, targetPos: [] }, position: null };
                     continue;
@@ -65,13 +65,6 @@ const generateRandomBoard = () => {
 
     const reducedBoard = reduceBoard(board);
     const positionedBoard = placePlayers(reducedBoard);
-
-    for (let i = 0; i < positionedBoard.length; i++) {
-        for (let j = 0; j < positionedBoard[i].length; j++) {
-            const neighbors = getNeighbors(positionedBoard, [i, j]);
-            if (!neighbors.length) return generateRandomBoard();
-        };
-    };
 
     if (!searchValidPath(positionedBoard)) return generateRandomBoard();
 
