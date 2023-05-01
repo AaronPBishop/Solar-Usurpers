@@ -5,7 +5,10 @@ const Row = ({ rowCoord, assemblies }) => {
         <div style={{display: 'flex', flexWrap: 'wrap', width: '100%', height: 'fit-content', justifyContent: 'center'}}>
             {
                 assemblies.map((assembly, i) => {
-                    if (!assembly) return (<div></div>)
+                    if (!assembly) return (
+                        <div style={{width: '5vw', marginTop: '4vh', marginBottom: '4vh', marginLeft: '2vw', marginRight: '2vw'}}></div>
+                    );
+
                     return <Assembly rowCoord={rowCoord} colCoord={i} usurper={assembly.usurper} troops={assembly.troops} key={i} />
                 })
             }

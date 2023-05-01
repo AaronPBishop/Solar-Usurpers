@@ -16,7 +16,9 @@ const getNeighbors = (board, assemblyCoord) => {
     for (let neighbor of neighbors) {
         const [nRow, nCol] = neighbor;
 
-        if (nRow >= 0 && nRow < board.length && nCol >= 0 && nCol < board[0].length) validNeighbors.push([nRow, nCol]);
+        if (nRow >= 0 && nRow < board.length && nCol >= 0 && nCol < board[0].length) {
+            if (board[nRow][nCol] !== null) validNeighbors.push(neighbor);
+        };
     };
 
     return validNeighbors;

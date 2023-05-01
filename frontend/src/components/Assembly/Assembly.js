@@ -68,7 +68,7 @@ const Assembly = ({ rowCoord, colCoord, usurper, troops }) => {
             justifyContent: 'center',
             height: 'fit-content',
             width: '5vw',
-            margin: '2vw',
+            margin: '3vw',
             cursor: 'pointer'
         }}>
             <GalacticRepublic
