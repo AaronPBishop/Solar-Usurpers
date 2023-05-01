@@ -17,6 +17,15 @@ body {
   animation: spin 6s linear infinite;
 }
 
+.troop.animate {
+  animation: troop-move 0.5s linear;
+}
+
+@keyframes troop-move {
+  from { transform: translate(0, 0); }
+  to { transform: translate(var(--destination-x), var(--destination-y)); }
+}
+
 @keyframes spin {
   0% {
       transform: rotate(0deg);

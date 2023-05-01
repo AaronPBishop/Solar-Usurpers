@@ -11,7 +11,7 @@ const reduceBoard = (board) => {
     const boardCopy = [...board];
 
     for (let i = 0; i < boardCopy.length; i++) {
-        let randTotal = Math.floor(Math.random() * 6) + 2;
+        let randTotal = Math.floor(Math.random() * 6) + 3;
 
         while (randTotal > 0) {
             const randAssembly = Math.floor(Math.random() * boardCopy[i].length);
@@ -32,7 +32,7 @@ const placePlayers = (board) => {
   
     if (boardCopy[randPlayerRow][randPlayerCol] === null) return placePlayers(boardCopy);
   
-    boardCopy[randPlayerRow][randPlayerCol] = { usurper: 'player', troops: 10 };
+    boardCopy[randPlayerRow][randPlayerCol] = { usurper: 'player', troops: 10, attackData: { isAttacking: false, numTroops: 0, targetPos: [] }, position: null };
   
     for (let i = 0; i < Math.floor(Math.random() * 3) + 1; i++) {
         let randCPURow = Math.floor(Math.random() * boardCopy.length);
@@ -41,7 +41,7 @@ const placePlayers = (board) => {
         if (boardCopy[randCPURow][randCPUCol] !== null) {
             if (Math.abs(randPlayerRow - randCPURow) >= 2) {
                 if (board[randCPURow][randCPUCol].usurper !== 'player') {
-                    boardCopy[randCPURow][randCPUCol] = { usurper: generateRandomColor(), troops: 25 };
+                    boardCopy[randCPURow][randCPUCol] = { usurper: generateRandomColor(), troops: 25, attackData: { isAttacking: false, numTroops: 0, targetPos: [] }, position: null };
                     continue;
                 };
             };
@@ -59,7 +59,7 @@ const generateRandomBoard = () => {
         board.push([]);
 
         for (let j = 0; j < 8; j++) {
-            board[board.length - 1].push({ usurper: null, troops: 10 });
+            board[board.length - 1].push({ usurper: null, troops: 10, attackData: { isAttacking: false, numTroops: 0, targetPos: [] }, position: null });
         };
     };
 
