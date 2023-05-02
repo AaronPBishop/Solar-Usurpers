@@ -11,7 +11,7 @@ const Row = ({ rowCoord, assemblies }) => {
                         key={i}></div>
                     );
 
-                    return <Assembly rowCoord={rowCoord} colCoord={i} usurper={assembly.usurper} troops={assembly.troops} attackData={assembly.attackData} key={i} />
+                    return <Assembly rowCoord={rowCoord} colCoord={i} usurper={assembly.usurper} troops={assembly.troops} attackData={assembly.attackData} randKey={assembly.randKey} key={i} />
                 })
             }
         </div>

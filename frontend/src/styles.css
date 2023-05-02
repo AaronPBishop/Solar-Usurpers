@@ -14,11 +14,15 @@ body {
 }
 
 .spin-assembly {
-  animation: spin 6s linear infinite;
+  animation: spin 4s linear infinite;
 }
 
 .troop.animate {
-  animation: troop-move 0.5s linear;
+  animation: troop-move 0.4s linear;
+}
+
+.spin-troop {
+  animation: spin 0.4s linear infinite;
 }
 
 @keyframes troop-move {

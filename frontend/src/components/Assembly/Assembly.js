@@ -7,7 +7,7 @@ import Troop from '../Troop/Troop';
 
 import { GalacticRepublic } from '@styled-icons/fa-brands/GalacticRepublic';
 
-const Assembly = ({ rowCoord, colCoord, usurper, troops, attackData }) => {
+const Assembly = ({ rowCoord, colCoord, usurper, troops, attackData, randKey }) => {
     const ref = useRef(null);
     const dispatch = useDispatch();
 
@@ -41,7 +41,31 @@ const Assembly = ({ rowCoord, colCoord, usurper, troops, attackData }) => {
     useEffect(() => {
         for (let i = 0; i < gameState.board.length; i++) {
             for (let j = 0; j < gameState.board[i].length; j++) {
-                if (i === rowCoord && j === colCoord) setCurrTroops(gameState.board[i][j].troops);
+                if (i === rowCoord && j === colCoord) {
+                    let newTroopTotal = gameState.board[i][j].troops;
+
+                    if (newTroopTotal < currTroops) {
+                        const troopTimer = setInterval(() => {
+                            if (newTroopTotal < currTroops) {
+                                setCurrTroops(currTroops - 1);
+                            } else return;
+                        }, [1])
+
+                        return () => clearInterval(troopTimer);
+                    };
+
+                    if (newTroopTotal > currTroops) {
+                        const troopTimer = setInterval(() => {
+                            if (newTroopTotal > currTroops) {
+                                setCurrTroops(currTroops + 1);
+                            } else return;
+                        }, [1])
+
+                        return () => clearInterval(troopTimer);
+                    };
+
+                    break;
+                };
             };
         };
     }, [gameState.board]);
@@ -68,6 +92,7 @@ const Assembly = ({ rowCoord, colCoord, usurper, troops, attackData }) => {
 
     return (
         <div
+        key={randKey}
         ref={ref}
         onClick={() => {
             if (usurper === 'player') {
@@ -108,7 +133,7 @@ const Assembly = ({ rowCoord, colCoord, usurper, troops, attackData }) => {
                 {
                     attackData.isAttacking &&
                     Array.from({ length: attackData.numTroops }).map((troop, i) => {
-                        return <Troop color={usurper === 'player' ? 'yellow' : 'usurper'} xStart={positionState.x} yStart={positionState.y} xDestination={attackData.targetPos[0]} yDestination={attackData.targetPos[1]} index={i} key={i} />
+                        return <Troop color={usurper === 'player' ? 'yellow' : 'usurper'} xStart={positionState.x} yStart={positionState.y} xDestination={attackData.targetPos[0]} yDestination={attackData.targetPos[1]} index={i} key={troop} />
                     })
                 }
             </div>

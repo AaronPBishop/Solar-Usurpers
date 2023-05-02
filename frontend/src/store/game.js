@@ -1,8 +1,10 @@
 import generateRandomBoard from "../functions/generateRandomBoard";
+import randKeyGen from '../functions/randKeyGen';
 import getNeighbors from "../functions/getNeighbors";
 
 const initialState = {
     board: [],
+    randKeys: [],
     selectedAssemblies: [],
     selectedTarget: [],
     previousAttackers: [],
@@ -47,12 +49,6 @@ export const setTarget = (coordinates) => {
 export const launchAttack = () => {
     return { 
         type: 'LAUNCH_ATTACK'
-    };
-};
-
-export const restorePeace = () => {
-    return { 
-        type: 'RESTORE_PEACE'
     };
 };
 
@@ -141,7 +137,16 @@ const gameReducer = (state = initialState, action) => {
         };
 
         case 'LAUNCH_ATTACK': {
+            currentState.isAttacking = false;
+
             const boardCopy = [...currentState.board];
+            for (let assembly of currentState.previousAttackers) {
+                const [row, col] = assembly;
+
+                boardCopy[row][col].attackData = { isAttacking: false, numTroops: 0, targetPos: [] };
+            };
+
+            const keyCopy = [...currentState.randKeys];
 
             if (!currentState.selectedTarget.length) {
                 const assembliesCopy = [...currentState.selectedAssemblies];
@@ -149,6 +154,9 @@ const gameReducer = (state = initialState, action) => {
 
                 for (let coord of assembliesCopy) {
                     const [assemblyRow, assemblyCol] = coord;
+
+                    const randKey = randKeyGen(keyCopy);
+                    keyCopy.push(randKey);
     
                     boardCopy[targetAllyRow][targetAllyCol].troops += boardCopy[assemblyRow][assemblyCol].troops; 
     
@@ -157,9 +165,11 @@ const gameReducer = (state = initialState, action) => {
                     boardCopy[assemblyRow][assemblyCol].attackData.targetPos = [boardCopy[targetAllyRow][targetAllyCol].position.x, boardCopy[targetAllyRow][targetAllyCol].position.y];
 
                     boardCopy[assemblyRow][assemblyCol].troops = 0;
+                    boardCopy[assemblyRow][assemblyCol].randKey = randKey;
                 };
                 
                 currentState.board = boardCopy;
+                currentState.randKeys = keyCopy;
                 currentState.previousAttackers = currentState.selectedAssemblies;
                 currentState.selectedAssemblies = [];
                 currentState.selectedTarget = [];
@@ -174,6 +184,9 @@ const gameReducer = (state = initialState, action) => {
             for (let coord of currentState.selectedAssemblies) {
                 const [assemblyRow, assemblyCol] = coord;
 
+                const randKey = randKeyGen(keyCopy);
+                keyCopy.push(randKey);
+
                 totalAssemblyTroops += boardCopy[assemblyRow][assemblyCol].troops;
 
                 boardCopy[assemblyRow][assemblyCol].attackData.isAttacking = true;
@@ -181,6 +194,7 @@ const gameReducer = (state = initialState, action) => {
                 boardCopy[assemblyRow][assemblyCol].attackData.targetPos = [boardCopy[targetRow][targetCol].position.x, boardCopy[targetRow][targetCol].position.y];
 
                 boardCopy[assemblyRow][assemblyCol].troops = 0;
+                boardCopy[assemblyRow][assemblyCol].randKey = randKey;
             };
         
             boardCopy[targetRow][targetCol].troops -= totalAssemblyTroops;
@@ -190,26 +204,12 @@ const gameReducer = (state = initialState, action) => {
             };
         
             currentState.board = boardCopy;
+            currentState.randKeys = keyCopy;
             currentState.previousAttackers = currentState.selectedAssemblies;
             currentState.selectedAssemblies = [];
             currentState.selectedTarget = [];
             currentState.isAttacking = true;
         
-            return currentState;
-        };
-
-        case 'RESTORE_PEACE': {
-            currentState.isAttacking = false;
-
-            const boardCopy = [...currentState.board];
-            for (let assembly of currentState.previousAttackers) {
-                const [row, col] = assembly;
-
-                boardCopy[row][col].attackData = { isAttacking: false, numTroops: 0, targetPos: [] };
-            };
-
-            currentState.board = boardCopy;
-
             return currentState;
         };
 
