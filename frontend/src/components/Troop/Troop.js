@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { restorePeace } from '../../store/game';
 
-import { SpaceShip } from '@styled-icons/remix-fill/SpaceShip';
+import { GalacticRepublic } from '@styled-icons/fa-brands/GalacticRepublic';
 
-const Troop = ({ xStart, yStart, xDestination, yDestination, index }) => {
+const Troop = ({ color, xStart, yStart, xDestination, yDestination, index }) => {
     const dispatch = useDispatch();
 
     const isAttacking = useSelector(state => state.game.isAttacking);
@@ -13,7 +13,7 @@ const Troop = ({ xStart, yStart, xDestination, yDestination, index }) => {
     const [shouldRender, setShouldRender] = useState(false);
 
     useEffect(() => {
-        if (isAttacking) setTimeout(() => { setShouldRender(true) }, [index * 50]);
+        if (isAttacking) setTimeout(() => { setShouldRender(true) }, [index * 150]);
     }, [isAttacking]);
 
     useEffect(() => {
@@ -21,7 +21,7 @@ const Troop = ({ xStart, yStart, xDestination, yDestination, index }) => {
             const attackTimer = setTimeout(() => {
                 dispatch(restorePeace());
                 setShouldRender(false);
-            }, 1000);
+            }, 20000);
 
             return () => clearTimeout(attackTimer);
         };
@@ -37,14 +37,14 @@ const Troop = ({ xStart, yStart, xDestination, yDestination, index }) => {
             '--destination-x': `${xDestination - xStart}px`,
             '--destination-y': `${yDestination - yStart}px`,
             transition: 'transform 0.5s',
-            position: 'absolute'
+            position: 'absolute',
+            zIndex: '10'
         }}>
-            <SpaceShip 
+            <GalacticRepublic 
             style={{
-                width: '1vw',
-                color: 'white',
-                rotate: `${xStart + yStart / xDestination + yDestination}deg`,
-                zIndex: '1'
+                width: '2vw',
+                color: `${color}`,
+                rotate: `${xStart + yStart / xDestination + yDestination}deg`
             }}/>
         </div>
     );

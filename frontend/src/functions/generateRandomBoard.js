@@ -2,7 +2,7 @@ import getNeighbors from "./getNeighbors";
 import searchValidPath from "./searchValidPath";
 
 const generateRandomColor = () => {
-    const colors = ['red', 'blue', 'rgb(0, 210, 0)'];
+    const colors = ['red', 'blue', 'rgb(0, 220, 0)'];
 
     return colors[Math.floor(Math.random() * colors.length)];
 };
@@ -34,13 +34,13 @@ const placePlayers = (board) => {
   
     boardCopy[randPlayerRow][randPlayerCol] = { usurper: 'player', troops: 10, attackData: { isAttacking: false, numTroops: 0, targetPos: [] }, position: null };
   
-    for (let i = 0; i < Math.floor(Math.random() * 3) + 1; i++) {
+    for (let i = 0; i < Math.floor(Math.random() * 4) + 2; i++) {
         let randCPURow = Math.floor(Math.random() * boardCopy.length);
         let randCPUCol = Math.floor(Math.random() * boardCopy[randCPURow].length);
 
         if (boardCopy[randCPURow][randCPUCol] !== null) {
-            if (Math.abs(randPlayerRow - randCPURow) >= 2 && Math.abs(randPlayerCol - randCPUCol) >= 3) {
-                if (board[randCPURow][randCPUCol].usurper !== 'player') {
+            if (Math.abs(randPlayerRow - randCPURow) >= 2) {
+                if (board[randCPURow][randCPUCol].usurper === null) {
                     boardCopy[randCPURow][randCPUCol] = { usurper: generateRandomColor(), troops: 25, attackData: { isAttacking: false, numTroops: 0, targetPos: [] }, position: null };
                     continue;
                 };

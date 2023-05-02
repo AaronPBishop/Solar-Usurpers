@@ -30,7 +30,7 @@ const BoardContainer = () => {
             display: 'flex',
             justifyContent: 'center',
             flexWrap: 'wrap',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            backgroundColor: 'rgba(0, 0, 0, 0.1)',
             border: '2px solid transparent',
             width: '90vw',
             height: '95vh'

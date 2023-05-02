@@ -81,30 +81,34 @@ const Assembly = ({ rowCoord, colCoord, usurper, troops, attackData }) => {
             display: 'flex',
             flexWrap: 'wrap',
             justifyContent: 'center',
+            backgroundColor: 'black',
+            borderRadius: '100vw',
             height: 'fit-content',
-            width: '5vw',
+            width: '4.5vw',
             margin: '3vw',
             cursor: 'pointer',
-            zIndex: '100'
+            zIndex: '1000'
         }}>
             <GalacticRepublic
             className='spin-assembly'
             style={{
-                color: !usurper ? 'rgb(60, 60, 60)' : usurper === 'player' ? 'yellow' : usurper,
-                width: '4vw',
+                color: !usurper ? 'rgb(100, 100, 100)' : usurper === 'player' ? 'yellow' : usurper,
+                width: '4.5vw',
                 boxShadow: clicked && '0px 0px 10px 2px yellow',
-                borderRadius: '100vw'
+                borderRadius: '100vw',
+                backgroundColor: 'black',
+                zIndex: '900'
             }} />
 
-            <span style={{fontFamily: 'Orbitron', textAlign: 'center', marginTop: '0.1vh', width: '5vw'}}>
+            <span style={{fontFamily: 'Orbitron', textAlign: 'center', marginTop: '10vh', width: '5vw', position: 'absolute'}}>
                 {currTroops}
             </span>
 
-            <div style={{position: 'absolute', marginTop: '3vh', marginRight: '1vw'}}>
+            <div style={{position: 'absolute', marginTop: '2.73vh', marginRight: '1.98vw', zIndex: '10'}}>
                 {
                     attackData.isAttacking &&
                     Array.from({ length: attackData.numTroops }).map((troop, i) => {
-                        return <Troop xStart={positionState.x} yStart={positionState.y} xDestination={attackData.targetPos[0]} yDestination={attackData.targetPos[1]} index={i} key={i} />
+                        return <Troop color={usurper === 'player' ? 'yellow' : 'usurper'} xStart={positionState.x} yStart={positionState.y} xDestination={attackData.targetPos[0]} yDestination={attackData.targetPos[1]} index={i} key={i} />
                     })
                 }
             </div>
