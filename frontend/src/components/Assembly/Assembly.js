@@ -85,6 +85,7 @@ const Assembly = ({ rowCoord, colCoord, usurper, troops, attackData, randKey }) 
 
             dispatch(setTarget({ row: rowCoord, col: colCoord }));
         }}
+        className='assembly'
         style={{
             display: 'flex',
             flexWrap: 'wrap',

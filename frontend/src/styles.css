@@ -13,6 +13,10 @@ body {
   background-color: black;
 }
 
+.assembly {
+  animation: orbit 4s linear infinite;
+}
+
 .spin-assembly {
   animation: spin 4s linear infinite;
 }
@@ -25,9 +29,9 @@ body {
   animation: spin 0.4s linear infinite;
 }
 
-@keyframes troop-move {
-  from { transform: translate(0, 0); }
-  to { transform: translate(var(--destination-x), var(--destination-y)); }
+@keyframes orbit {
+  from { transform: rotate(0deg) translateX(1px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(1px) rotate(-360deg); }
 }
 
 @keyframes spin {
@@ -37,4 +41,9 @@ body {
   100% {
       transform: rotate(360deg);
   }
+}
+
+@keyframes troop-move {
+  from { transform: translate(0, 0); }
+  to { transform: translate(var(--destination-x), var(--destination-y)); }
 }
