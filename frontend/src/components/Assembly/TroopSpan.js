@@ -4,7 +4,7 @@ const TroopsAnimation = ({ prevTroops, currTroops }) => {
   const { troops } = useSpring({
     troops: currTroops,
     from: { troops: prevTroops },
-    config: { tension: (currTroops + 1 * 30), friction: (currTroops + 1 * 7) }
+    config: { tension: (prevTroops + 1 * 30), friction: (prevTroops + 1 * 7) }
   });
 
   return (

@@ -1,11 +1,4 @@
-import getNeighbors from "./getNeighbors";
 import searchValidPath from "./searchValidPath";
-
-const generateRandomColor = () => {
-    const colors = ['red', 'blue', 'rgb(0, 220, 0)'];
-
-    return colors[Math.floor(Math.random() * colors.length)];
-};
 
 const reduceBoard = (board) => {
     const boardCopy = [...board];
@@ -33,20 +26,23 @@ const placePlayers = (board) => {
     if (boardCopy[randPlayerRow][randPlayerCol] === null) return placePlayers(boardCopy);
   
     boardCopy[randPlayerRow][randPlayerCol] = { usurper: 'player', troops: 10, attackData: { isAttacking: false, numTroops: 0, targetPos: [] }, position: null, randKey: 0 };
-  
-    for (let i = 0; i < Math.floor(Math.random() * 4) + 2; i++) {
+
+    const CPUcolors = ['blue', 'red', 'rgb(0, 220, 0)'];
+    let numCPUs = Math.floor(Math.random() * 2) + 2;
+    while (numCPUs > 0) {
         let randCPURow = Math.floor(Math.random() * boardCopy.length);
         let randCPUCol = Math.floor(Math.random() * boardCopy[randCPURow].length);
 
         if (boardCopy[randCPURow][randCPUCol] !== null) {
-            if (Math.abs(randPlayerRow - randCPURow) >= 2) {
+            if (Math.abs(randPlayerRow - randCPURow) >= 1 && Math.abs(randPlayerCol - randCPUCol) >= 1) {
                 if (board[randCPURow][randCPUCol].usurper === null) {
-                    boardCopy[randCPURow][randCPUCol] = { usurper: generateRandomColor(), troops: 25, attackData: { isAttacking: false, numTroops: 0, targetPos: [] }, position: null, randKey: 0 };
-                    continue;
+                    const CPUColor = CPUcolors.shift();
+
+                    boardCopy[randCPURow][randCPUCol] = { usurper: CPUColor, troops: 25, attackData: { isAttacking: false, numTroops: 0, targetPos: [] }, position: null, randKey: 0 };
+                    numCPUs--;
                 };
             };
         };
-        i--;
     };
   
     return boardCopy;
