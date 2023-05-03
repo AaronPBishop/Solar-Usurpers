@@ -114,7 +114,7 @@ const Assembly = ({ rowCoord, colCoord, usurper, troops, attackData, randKey }) 
                 {
                     attackData.isAttacking &&
                     Array.from({ length: attackData.numTroops }).map((troop, i) => {
-                        return <Troop color={usurper === 'player' ? 'yellow' : 'usurper'} xStart={positionState.x} yStart={positionState.y} xDestination={attackData.targetPos[0]} yDestination={attackData.targetPos[1]} index={i} key={troop} />
+                        return <Troop totalTroops={attackData.numTroops} color={usurper === 'player' ? 'yellow' : 'usurper'} xStart={positionState.x} yStart={positionState.y} xDestination={attackData.targetPos[0]} yDestination={attackData.targetPos[1]} index={i} key={troop} />
                     })
                 }
             </div>

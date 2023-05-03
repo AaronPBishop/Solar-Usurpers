@@ -3,12 +3,12 @@ import { useSelector } from 'react-redux';
 
 import { GalacticRepublic } from '@styled-icons/fa-brands/GalacticRepublic';
 
-const Troop = ({ color, xStart, yStart, xDestination, yDestination, index }) => {
+const Troop = ({ totalTroops, color, xStart, yStart, xDestination, yDestination, index }) => {
     const isAttacking = useSelector(state => state.game.isAttacking);
 
     const [shouldRender, setShouldRender] = useState(false);
 
-    useEffect(() => { if (isAttacking) setTimeout(() => { setShouldRender(true) }, [index * 150]) }, [isAttacking]);
+    useEffect(() => { if (isAttacking) setTimeout(() => { setShouldRender(true) }, [index * (700 / totalTroops)]) }, [isAttacking]);
 
     if (!shouldRender) return null;
     if (shouldRender) return (
