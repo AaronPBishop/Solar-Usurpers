@@ -24,7 +24,7 @@ const BoardContainer = () => {
         return () => document.removeEventListener('keydown', keyDownHandler);
     }, []);
 
-    return (
+    if (board.length) return (
         <div
         style={{
             display: 'flex',
@@ -36,7 +36,6 @@ const BoardContainer = () => {
             height: '95vh'
         }}>
             {
-                board.length &&
                 board.map((row, i) => <Row rowCoord={i} assemblies={row} key={i} />)
             }
         </div>
