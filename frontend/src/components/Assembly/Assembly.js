@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from 'react';
 
 import { setPosition, incrementTroops, setAssemblies, setTarget } from '../../store/game';
 
+import TroopSpan from './TroopSpan';
 import Troop from '../Troop/Troop';
 
 import { GalacticRepublic } from '@styled-icons/fa-brands/GalacticRepublic';
@@ -18,6 +19,7 @@ const Assembly = ({ rowCoord, colCoord, usurper, troops, attackData, randKey }) 
     const [clicked, setClicked] = useState(false);
 
     const [switched, setSwitched] = useState(false);
+    const [prevTroops, setPrevTroops] = useState(false);
     const [currTroops, setCurrTroops] = useState(troops);
 
     useEffect(() => {
@@ -32,6 +34,7 @@ const Assembly = ({ rowCoord, colCoord, usurper, troops, attackData, randKey }) 
     useEffect(() => {
         const troopTimer = setInterval(() => {
             if (usurper && currTroops < 50) dispatch(incrementTroops({ row: rowCoord, col: colCoord }));
+
             setSwitched(switched => !switched);
         }, [1000]);
 
@@ -42,29 +45,9 @@ const Assembly = ({ rowCoord, colCoord, usurper, troops, attackData, randKey }) 
         for (let i = 0; i < gameState.board.length; i++) {
             for (let j = 0; j < gameState.board[i].length; j++) {
                 if (i === rowCoord && j === colCoord) {
-                    let newTroopTotal = gameState.board[i][j].troops;
+                    setPrevTroops(currTroops);
 
-                    if (newTroopTotal < currTroops) {
-                        const troopTimer = setInterval(() => {
-                            if (newTroopTotal < currTroops) {
-                                setCurrTroops(currTroops - 1);
-                            } else return;
-                        }, [1])
-
-                        return () => clearInterval(troopTimer);
-                    };
-
-                    if (newTroopTotal > currTroops) {
-                        const troopTimer = setInterval(() => {
-                            if (newTroopTotal > currTroops) {
-                                setCurrTroops(currTroops + 1);
-                            } else return;
-                        }, [1])
-
-                        return () => clearInterval(troopTimer);
-                    };
-
-                    break;
+                    setCurrTroops(gameState.board[i][j].troops);
                 };
             };
         };
@@ -125,9 +108,7 @@ const Assembly = ({ rowCoord, colCoord, usurper, troops, attackData, randKey }) 
                 zIndex: '900'
             }} />
 
-            <span style={{fontFamily: 'Orbitron', textAlign: 'center', marginTop: '10vh', width: '5vw', position: 'absolute'}}>
-                {currTroops}
-            </span>
+            <TroopSpan prevTroops={prevTroops} currTroops={currTroops} />
 
             <div style={{position: 'absolute', marginTop: '2.73vh', marginRight: '1.98vw', zIndex: '10'}}>
                 {

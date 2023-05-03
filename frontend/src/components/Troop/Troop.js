@@ -20,7 +20,7 @@ const Troop = ({ color, xStart, yStart, xDestination, yDestination, index }) => 
             transform: `translate(${xDestination - xStart}px, ${yDestination - yStart}px)`,
             '--destination-x': `${xDestination - xStart}px`,
             '--destination-y': `${yDestination - yStart}px`,
-            transition: 'transform 0.4s',
+            transition: 'transform 0.2s',
             position: 'absolute',
             zIndex: '10'
         }}>
